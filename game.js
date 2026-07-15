@@ -1322,3 +1322,25 @@ const bindMobileControl = (id, callback) => {
 bindMobileControl('mobile-btn-jump', () => player.jump());
 bindMobileControl('mobile-btn-slide', () => player.slide());
 bindMobileControl('mobile-btn-blast', () => triggerVeggieAttack());
+
+// Audio Gate Screen Handler (Bypasses autoplay blocks by capturing first touch/click)
+const elGate = document.getElementById('audio-gate-screen');
+if (elGate) {
+  const dismissGate = () => {
+    sounds.initContext();
+    sounds.playVillainMusic();
+    elGate.classList.add('hidden');
+    setTimeout(() => {
+      if (elGate.parentNode) elGate.parentNode.removeChild(elGate);
+    }, 450);
+  };
+  
+  elGate.addEventListener('click', e => {
+    dismissGate();
+    e.preventDefault();
+  });
+  elGate.addEventListener('touchstart', e => {
+    dismissGate();
+    e.preventDefault();
+  }, { passive: false });
+}

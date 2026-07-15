@@ -867,8 +867,40 @@ kbd {
   .mobile-controls-layer {
     display: flex;
   }
-  
   .mobile-controls-guide {
     display: block;
   }
+}
+
+/* Audio activation boot screen styling */
+.gate-screen {
+  background: radial-gradient(circle at center, #0e0f24 0%, #05060f 100%);
+  z-index: 100;
+}
+
+.cabinet-boot-text {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: var(--border-neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  animation: bootFlicker 1.5s infinite;
+}
+
+.gate-hint {
+  font-size: 0.8rem;
+  color: #5d6588;
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-pulse {
+  animation: pulseScale 1s infinite alternate;
+}
+
+@keyframes bootFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 0.99; }
+  20%, 24%, 55% { opacity: 0.45; }
 }
