@@ -608,6 +608,10 @@ kbd {
   display: none;
 }
 
+.desktop-story {
+  display: block;
+}
+
 /* Mobile Controls Layer & Button CSS */
 .mobile-controls-layer {
   display: none;
@@ -703,6 +707,10 @@ kbd {
 
 /* Responsive Scaling Overrides for Smartphones */
 @media (max-width: 1024px), (pointer: coarse) {
+  .desktop-story {
+    display: none;
+  }
+  
   body {
     padding: 2px;
   }
@@ -1026,5 +1034,40 @@ kbd {
   .btn {
     padding: 4px 10px !important;
     font-size: 0.7rem !important;
+  }
+  
+  /* End Screen elements shrink in landscape */
+  .end-screen-summary {
+    font-size: 0.62rem !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .end-screen-avatars {
+    gap: 6px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .end-avatar {
+    width: 38px !important;
+    height: 38px !important;
+    border-width: 1.5px !important;
+  }
+  
+  .victory-screen .instructions-panel,
+  .gameover-screen .instructions-panel {
+    padding: 2px 6px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .victory-screen .instructions-panel div,
+  .gameover-screen .instructions-panel div {
+    font-size: 0.65rem !important;
+    margin-bottom: 0px !important;
+  }
+
+  /* Lift virtual controls higher in landscape mode to clear phone edges */
+  .mobile-controls-layer {
+    bottom: 22px !important;
+    padding: 0 30px !important;
   }
 }
