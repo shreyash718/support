@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sonam Wanchu's Student Support Showdown: Dharmendra & Modi's Revenge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Game Cabinet Wrapper -->
+  <div class="game-viewport">
+    
+    <!-- Game Canvas -->
+    <canvas id="game-canvas" width="800" height="500"></canvas>
+
+    <!-- Theme Song Control Toggle -->
+    <div class="audio-controls">
+      <button id="audio-mute-btn" class="audio-btn" title="Toggle Theme Music">
+        <!-- SVG Speaker Icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="hud-overlay" class="hud-overlay" style="display: none;">
+      
+      <!-- Top HUD Rows -->
+      <div class="hud-top">
+        
+        <!-- Player Status (Health, Support Power, Score) -->
+        <div class="hud-panel player-status">
+          <!-- Score and Distance -->
+          <div class="hud-score">
+            <div>SCORE: <span id="score-val">0</span></div>
+            <div>DIST: <span id="distance-val">0m</span></div>
+          </div>
+          
+          <!-- Health Bar -->
+          <div class="status-row">
+            <span class="bar-label">HP</span>
+            <div class="bar-outer">
+              <div id="health-bar" class="bar-inner hp-bar" style="width: 100%;"></div>
+            </div>
+          </div>
+          
+          <!-- Support Power Bar -->
+          <div class="status-row">
+            <span class="bar-label">SUPPORT</span>
+            <div class="bar-outer">
+              <div id="power-bar" class="bar-inner power-bar" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Villains Status (Health Bars) -->
+        <div class="hud-panel villains-status">
+          <!-- Dharmendra Health Row -->
+          <div id="dharmendra-hud-row" class="villain-hud-row">
+            <div class="villain-avatar-mini dharmendra-avatar-mini">
+              <img src="Image/dharmendra.jpg" alt="Dharmendra">
+            </div>
+            <div style="flex-grow: 1;">
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--villain-1-color); margin-bottom: 2px;">DHARMENDRA</div>
+              <div class="bar-outer" style="height: 8px;">
+                <div id="dharmendra-health" class="bar-inner villain-hp-bar" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modi Health Row -->
+          <div id="modi-hud-row" class="villain-hud-row">
+            <div class="villain-avatar-mini modi-avatar-mini">
+              <img src="Image/modi.jpg" alt="Modi">
+            </div>
+            <div style="flex-grow: 1;">
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--villain-2-color); margin-bottom: 2px;">MODI</div>
+              <div class="bar-outer" style="height: 8px;">
+                <div id="modi-health" class="bar-inner villain-hp-bar" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom HUD Row -->
+      <div class="hud-bottom">
+        <button id="attack-indicator" class="attack-indicator">COLLECT SUPPORT TO CHARGE</button>
+      </div>
+
+      <!-- Mobile Virtual Controls overlay -->
+      <div class="mobile-controls-layer">
+        <div style="display: flex; gap: 12px; pointer-events: auto;">
+          <button id="mobile-btn-jump" class="mobile-control-btn btn-jump">JUMP</button>
+          <button id="mobile-btn-slide" class="mobile-control-btn btn-slide">SLIDE</button>
+        </div>
+        <div style="pointer-events: auto;">
+          <button id="mobile-btn-blast" class="mobile-control-btn btn-blast">BLAST</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Start / Menu Screen -->
+    <div id="menu-screen" class="overlay-screen">
+      <h1>SUPPORT SHOWDOWN</h1>
+      <div class="subtitle">Dharmendra & Modi's Revenge</div>
+      
+      <!-- Character Lineup Showcase: Sonam is placed between Dharmendra & Modi -->
+      <div class="lineup">
+        <div class="character-card villain1">
+          <div class="avatar-wrapper">
+            <img src="Image/dharmendra.jpg" alt="Dharmendra">
+          </div>
+          <div class="char-name">Dharmendra</div>
+          <span class="role-badge">Villain</span>
+        </div>
+
+        <div class="character-card hero">
+          <div class="avatar-wrapper">
+            <img src="Image/sonam.jpg" alt="Sonam Wanchu">
+          </div>
+          <div class="char-name">Sonam Wanchu</div>
+          <span class="role-badge">Hero</span>
+        </div>
+        
+        <div class="character-card villain2">
+          <div class="avatar-wrapper">
+            <img src="Image/modi.jpg" alt="Modi">
+          </div>
+          <div class="char-name">Modi</div>
+          <span class="role-badge">Villain</span>
+        </div>
+      </div>
+
+      <!-- Instruction Panel -->
+      <div class="instructions-panel">
+        <p><strong>The Story:</strong> Dharmendra & Modi are releasing issues like <em>"NEET Leak"</em>! You must collect <strong>"Support"</strong> badges to gain power.</p>
+        <p>Avoid the issues to stay healthy. When your Support Power reaches 100%, trigger a Support Blast to beat them up and clean the education system!</p>
+        
+        <div class="controls-guide">
+          <div class="control-key">
+            <kbd>▲</kbd> / <kbd>W</kbd> <span>Jump / Double Jump</span>
+          </div>
+          <div class="control-key">
+            <kbd>▼</kbd> / <kbd>S</kbd> <span>Slide / Fast Drop</span>
+          </div>
+          <div class="control-key">
+            <kbd>SPACE</kbd> <span>Support Blast</span>
+          </div>
+        </div>
+
+        <div class="mobile-controls-guide">
+          <p style="text-align: center; margin-top: 5px; color: var(--border-neon-cyan); font-weight: 700;">
+            📱 Smartphone Controls: Tap <span style="color:#2ecc71">JUMP</span> and <span style="color:#f1c40f">SLIDE</span> (bottom-left) to move. Tap <span style="color:#ff007f">BLAST</span> (bottom-right) when power is 100%!
+          </p>
+        </div>
+      </div>
+
+      <button id="start-btn" class="btn btn-cyan">Start Battle</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="overlay-screen hidden gameover-screen">
+      <h1>DEFEAT!</h1>
+      <div class="end-screen-summary">You ran out of support. Dharmendra & Modi continue to release issues!</div>
+      
+      <!-- Gloating Villains Avatars -->
+      <div class="end-screen-avatars">
+        <div class="end-avatar winner" style="border-color: var(--villain-1-color);">
+          <img src="Image/dharmendra.jpg" alt="Dharmendra">
+        </div>
+        <div class="end-avatar loser" style="filter: grayscale(1);">
+          <img src="Image/sonam.jpg" alt="Sonam Wanchu">
+        </div>
+        <div class="end-avatar winner" style="border-color: var(--villain-2-color);">
+          <img src="Image/modi.jpg" alt="Modi">
+        </div>
+      </div>
+
+      <div class="instructions-panel" style="text-align: center; border-color: rgba(231, 76, 60, 0.4);">
+        <div style="font-size: 1.1rem; margin-bottom: 5px;">Score: <span id="final-score-lose" style="color: #fff; font-weight: bold;">0</span></div>
+        <div style="font-size: 1.1rem;">Distance: <span id="final-dist-lose" style="color: #fff; font-weight: bold;">0m</span></div>
+      </div>
+
+      <button class="btn btn-pink restart-btn">Try Again</button>
+    </div>
+
+    <!-- Victory Screen -->
+    <div id="victory-screen" class="overlay-screen hidden victory-screen">
+      <h1>VICTORY!</h1>
+      <div class="end-screen-summary">You gathered student support, gained power, and defeated Dharmendra & Modi! Education is saved!</div>
+      
+      <!-- Defeated Villains Avatars -->
+      <div class="end-screen-avatars">
+        <div class="end-avatar loser" style="filter: grayscale(1);">
+          <img src="Image/dharmendra.jpg" alt="Dharmendra">
+        </div>
+        <div class="end-avatar winner">
+          <img src="Image/sonam.jpg" alt="Sonam Wanchu">
+        </div>
+        <div class="end-avatar loser" style="filter: grayscale(1);">
+          <img src="Image/modi.jpg" alt="Modi">
+        </div>
+      </div>
+
+      <div class="instructions-panel" style="text-align: center; border-color: rgba(46, 204, 113, 0.4);">
+        <div style="font-size: 1.1rem; margin-bottom: 5px;">Score: <span id="final-score-win" style="color: #fff; font-weight: bold;">0</span></div>
+        <div style="font-size: 1.1rem;">Distance: <span id="final-dist-win" style="color: #fff; font-weight: bold;">0m</span></div>
+      </div>
+
+      <button class="btn btn-cyan restart-btn">Play Again</button>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
