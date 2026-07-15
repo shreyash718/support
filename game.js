@@ -30,7 +30,15 @@ class SoundController {
 
   initContext() {
     if (!this.ctx) {
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          this.ctx = new AudioCtx();
+        }
+      } catch (e) {
+        console.warn("AudioContext creation failed:", e);
+        this.ctx = null;
+      }
     }
   }
 
@@ -91,7 +99,7 @@ class SoundController {
   // Synthesize Arcade Jump Sound
   playJumpSound() {
     this.initContext();
-    if (this.isMuted) return;
+    if (!this.ctx || this.isMuted) return;
 
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -113,7 +121,7 @@ class SoundController {
   // Synthesize Collect Sound
   playEatSound() {
     this.initContext();
-    if (this.isMuted) return;
+    if (!this.ctx || this.isMuted) return;
 
     const now = this.ctx.currentTime;
     
@@ -141,7 +149,7 @@ class SoundController {
   // Synthesize Obstacle Hit Sound
   playHitSound() {
     this.initContext();
-    if (this.isMuted) return;
+    if (!this.ctx || this.isMuted) return;
 
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -163,7 +171,7 @@ class SoundController {
   // Synthesize Launch Attack Sound
   playAttackSound() {
     this.initContext();
-    if (this.isMuted) return;
+    if (!this.ctx || this.isMuted) return;
 
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -185,7 +193,7 @@ class SoundController {
   // Synthesize Projectile Hit Sound
   playExplosionSound() {
     this.initContext();
-    if (this.isMuted) return;
+    if (!this.ctx || this.isMuted) return;
 
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -222,7 +230,7 @@ class SoundController {
   // Play Defeat Tune
   playDefeatMelody() {
     this.initContext();
-    if (this.isMuted) return;
+    if (!this.ctx || this.isMuted) return;
 
     const now = this.ctx.currentTime;
     const notes = [
@@ -1327,8 +1335,12 @@ bindMobileControl('mobile-btn-blast', () => triggerVeggieAttack());
 const elGate = document.getElementById('audio-gate-screen');
 if (elGate) {
   const dismissGate = () => {
-    sounds.initContext();
-    sounds.playVillainMusic();
+    try {
+      sounds.initContext();
+      sounds.playVillainMusic();
+    } catch (e) {
+      console.warn("Audio initialization failed during gate dismissal:", e);
+    }
     elGate.classList.add('hidden');
     setTimeout(() => {
       if (elGate.parentNode) elGate.parentNode.removeChild(elGate);
