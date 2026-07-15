@@ -911,3 +911,120 @@ kbd {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 0.99; }
   20%, 24%, 55% { opacity: 0.45; }
 }
+
+/* Rotation Overlay styling for portrait mode on mobile */
+.rotation-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #080914;
+  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Show when screen is portrait and is a phone/tablet */
+@media (max-width: 550px) and (orientation: portrait), (pointer: coarse) and (orientation: portrait) {
+  .rotation-overlay {
+    display: flex;
+  }
+}
+
+.rotation-icon-wrapper {
+  margin-bottom: 25px;
+}
+
+.rotate-phone-icon {
+  color: var(--border-neon-cyan);
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
+}
+
+.rotation-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--border-neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+  margin-bottom: 10px;
+  letter-spacing: 1.5px;
+}
+
+.rotation-subtext {
+  font-size: 0.85rem;
+  color: #8b92b6;
+  max-width: 250px;
+  line-height: 1.4;
+}
+
+@keyframes rotatePhone {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(-90deg); }
+  65% { transform: rotate(-90deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Widescreen height scaling: Scales cabinet container when screen height is small (landscape phone) */
+@media (max-height: 580px) and (orientation: landscape) {
+  .game-viewport {
+    height: 95vh;
+    width: calc(95vh * (900 / 550));
+    max-width: 98vw;
+    margin: auto;
+  }
+  
+  .overlay-screen {
+    padding: 6px !important;
+  }
+  
+  h1 {
+    font-size: 1.15rem !important;
+  }
+  
+  .subtitle {
+    font-size: 0.6rem !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .lineup {
+    gap: 4px !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .character-card {
+    width: 70px !important;
+    padding: 2px !important;
+    border-radius: 6px !important;
+  }
+  
+  .avatar-wrapper {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  
+  .char-name {
+    font-size: 0.58rem !important;
+  }
+  
+  .role-badge {
+    font-size: 0.5rem !important;
+    padding: 0 2px !important;
+  }
+  
+  .instructions-panel {
+    padding: 3px 6px !important;
+    margin-bottom: 4px !important;
+    font-size: 0.58rem !important;
+  }
+  
+  .btn {
+    padding: 4px 10px !important;
+    font-size: 0.7rem !important;
+  }
+}
