@@ -694,8 +694,15 @@ kbd {
   }
 }
 
+.touch-device .mobile-controls-layer {
+  display: flex !important;
+}
+.touch-device .mobile-controls-guide {
+  display: block !important;
+}
+
 /* Responsive Scaling Overrides for Smartphones */
-@media (max-width: 768px) {
+@media (max-width: 1024px), (pointer: coarse) {
   body {
     padding: 2px;
   }

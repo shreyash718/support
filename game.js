@@ -1356,3 +1356,8 @@ if (elGate) {
     e.preventDefault();
   }, { passive: false });
 }
+
+// Detect touch screen capabilities to force mobile buttons layout
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.body.classList.add('touch-device');
+}
